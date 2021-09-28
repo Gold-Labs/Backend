@@ -10,3 +10,4 @@ import { UserService } from './user.service';
   providers: [UserService],
 })
 export class UserModule {}
+// dependenct injection을 등록하는 것
