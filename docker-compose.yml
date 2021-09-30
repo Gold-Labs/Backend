@@ -10,3 +10,4 @@ services:
       - .env_db # 파일로 넣을 수도 있다.
     ports:
       - 3308:3306 # -p option과 동일하다
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
