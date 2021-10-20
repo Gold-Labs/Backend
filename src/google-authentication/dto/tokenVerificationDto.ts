@@ -5,3 +5,5 @@ export class TokenVerficationDto {
   @IsNotEmpty()
   token!: string;
 }
+
+export default TokenVerficationDto;

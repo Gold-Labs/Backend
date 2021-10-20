@@ -9,7 +9,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { UserService } from '../domain/service/user.service';
-import { UpdateDateColumn } from 'typeorm';
+import { CreateUserDto } from '../domain/dto/createUser.dto';
 
 @Controller('user')
 export class UserController {
@@ -26,9 +26,7 @@ export class UserController {
   }
 
   @Post()
-  async createUser(@Body() body: User) {
-    console.log('post');
-    console.log(body);
+  async createUser(@Body() body: CreateUserDto) {
     return this.userService.create(body);
   }
 

@@ -1,5 +1,6 @@
 import { Exclude } from 'class-transformer';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { AuthVendor } from '../type/auth-vendor.enum';
 
 @Entity()
 export class User {
@@ -16,6 +17,10 @@ export class User {
   @Exclude()
   public password?: string;
 
-  @Column({ default: false })
+  @Column({
+    type: 'enum',
+    enum: AuthVendor,
+    default: AuthVendor.MAIN,
+  })
   public isRegisteredWith!: string;
 }

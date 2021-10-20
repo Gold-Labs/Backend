@@ -1,6 +1,7 @@
 import { UserRepository } from '../../infrastructure/user.repository';
 import { Injectable } from '@nestjs/common';
 import { User } from '../entities/user.entitiy';
+import { CreateUserDto } from '../dto/createUser.dto';
 
 @Injectable()
 export class UserService {
@@ -8,6 +9,10 @@ export class UserService {
 
   async getOne(id: number) {
     return await this.userRepository.findOne(id);
+  }
+
+  async getOneByEmail(email: string) {
+    return await this.userRepository.findOne({ email });
   }
 
   async getAll() {
@@ -18,10 +23,8 @@ export class UserService {
   async deleteOne(id: number) {
     return await this.userRepository.delete(id);
   }
-  async create(body: User) {
-    console.log(body);
+  async create(body: Partial<CreateUserDto>) {
     const newUser = this.userRepository.create(body);
-    console.log(newUser);
     await this.userRepository.save(newUser);
     return newUser;
   }

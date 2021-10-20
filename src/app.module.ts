@@ -1,12 +1,20 @@
+import { GoogleAuthenticationModule } from './google-authentication/google-authentication.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), DatabaseModule, UserModule],
+  imports: [
+    ConfigModule.forRoot(),
+    DatabaseModule,
+    UserModule,
+    AuthenticationModule,
+    GoogleAuthenticationModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
