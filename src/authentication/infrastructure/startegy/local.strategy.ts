@@ -4,7 +4,7 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
-import { AuthenticationService } from '../authentication.service';
+import { AuthenticationService } from '../../domain/service/authentication.service';
 
 //auth guard 구현
 

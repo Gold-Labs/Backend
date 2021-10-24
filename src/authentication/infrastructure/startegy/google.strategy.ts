@@ -1,4 +1,4 @@
-import { AuthenticationService } from 'src/authentication/authentication.service';
+import { AuthenticationService } from 'src/authentication/domain/service/authentication.service';
 import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
@@ -17,10 +17,8 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
   }
 
   async validate(accessToken: string, refreshToken: string, profile: any, done: VerifyCallback) {
-    const { names, emails } = profile;
-    console.log(profile);
-    const email = emails[0];
-    const name = names.givenName;
+    const { displayName, emails } = profile;
+    const email = emails[0]?.value;
     const user = await this.authService.registerOauthUser(email, AuthVendor.GOOGLE);
     done(null, user);
   }

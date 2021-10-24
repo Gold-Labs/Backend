@@ -1,14 +1,15 @@
+import { ConfigService } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { UserModule } from 'src/user/user.module';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthenticationService } from './authentication.service';
-import { LocalStrategy } from './startegy/local.strategy';
-import { AuthenticationController } from './authentication.controller';
-import { jwtConstants } from './types/constatnts';
-import { JwtStrategy } from './startegy/jwt.strategy';
-import { GoogleStrategy } from './startegy/google.strategy';
-import { GoogleAuthenticationController } from './types/googleAuth.controller';
+import { AuthenticationService } from './domain/service/authentication.service';
+import { LocalStrategy } from './infrastructure/startegy/local.strategy';
+import { AuthenticationController } from './application/authentication.controller';
+import { jwtConstants } from './infrastructure/types/constatnts';
+import { JwtStrategy } from './infrastructure/startegy/jwt.strategy';
+import { GoogleStrategy } from './infrastructure/startegy/google.strategy';
+import { GoogleAuthController } from './application/google-auth.controller';
 
 @Module({
   imports: [
@@ -19,8 +20,8 @@ import { GoogleAuthenticationController } from './types/googleAuth.controller';
       signOptions: { expiresIn: '300s' },
     }),
   ],
-  providers: [AuthenticationService, LocalStrategy, JwtStrategy, GoogleStrategy],
+  providers: [AuthenticationService, LocalStrategy, JwtStrategy, GoogleStrategy, ConfigService],
   exports: [AuthenticationService],
-  controllers: [AuthenticationController, GoogleAuthenticationController],
+  controllers: [AuthenticationController, GoogleAuthController],
 })
 export class AuthenticationModule {}
