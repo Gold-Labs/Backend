@@ -46,7 +46,6 @@ export class AuthenticationService {
     if (isAlreadyRegisteredUser) {
       return this.userService.getOneByEmail(email);
     }
-    console.log('here');
     const newUser = await this.userService.create({
       email,
       name: email,
