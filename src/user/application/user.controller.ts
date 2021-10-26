@@ -1,13 +1,5 @@
 import { User } from './../domain/entities/user.entitiy';
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { UserService } from '../domain/service/user.service';
 import { CreateUserDto } from '../domain/dto/createUser.dto';
 
@@ -31,10 +23,7 @@ export class UserController {
   }
 
   @Patch(':id')
-  async updateUserById(
-    @Param() params: { id: string },
-    @Body() body: Partial<User>,
-  ) {
+  async updateUserById(@Param() params: { id: string }, @Body() body: Partial<User>) {
     return await this.userService.update(Number(params.id), body);
   }
 
