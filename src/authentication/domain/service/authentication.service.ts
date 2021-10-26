@@ -6,6 +6,7 @@ import { nullCheck } from 'src/util/nullCheck';
 import { User } from 'src/user/domain/entities/user.entitiy';
 import { CreateUserDto } from 'src/user/domain/dto/createUser.dto';
 import { AuthVendor } from 'src/user/domain/type/auth-vendor.enum';
+import { UserInfo } from 'src/authentication/infrastructure/types/userinfo';
 
 @Injectable()
 export class AuthenticationService {
@@ -41,15 +42,16 @@ export class AuthenticationService {
     }
   }
 
-  public async registerOauthUser(email: string, authVendor: AuthVendor) {
+  public async registerOauthUser(userInfo: UserInfo, authVendor: AuthVendor) {
+    const { displayName, email } = userInfo;
     const isAlreadyRegisteredUser = await this.IsOauthAuthenticatedUser(email, authVendor);
     if (isAlreadyRegisteredUser) {
       return this.userService.getOneByEmail(email);
     }
     const newUser = await this.userService.create({
       email,
-      name: email,
-      isRegisteredWith: AuthVendor.GOOGLE,
+      name: displayName,
+      isRegisteredWith: authVendor,
     });
     return newUser;
   }

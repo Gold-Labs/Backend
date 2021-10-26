@@ -1,3 +1,5 @@
+import { KakaoAuthController } from './application/kakao-auth.controller';
+import { KakaoStrategy } from './infrastructure/startegy/kakao.strategy';
 import { ConfigService } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
@@ -17,11 +19,11 @@ import { GoogleAuthController } from './application/google-auth.controller';
     UserModule,
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '300s' },
+      signOptions: { expiresIn: '1y' },
     }),
   ],
-  providers: [AuthenticationService, LocalStrategy, JwtStrategy, GoogleStrategy, ConfigService],
+  providers: [AuthenticationService, LocalStrategy, JwtStrategy, GoogleStrategy, ConfigService, KakaoStrategy],
   exports: [AuthenticationService],
-  controllers: [AuthenticationController, GoogleAuthController],
+  controllers: [AuthenticationController, GoogleAuthController, KakaoAuthController],
 })
 export class AuthenticationModule {}

@@ -5,7 +5,7 @@ import { jwtConstants } from '../types/constatnts';
 
 // 여기서 AuthGuard('jwt')를 정해준다. 내부적으로
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor() {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
