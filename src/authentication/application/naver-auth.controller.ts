@@ -1,19 +1,19 @@
 import { Controller, Get, Req, UseGuards, HttpException, HttpStatus, Redirect, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthenticationService } from '../domain/service/authentication.service';
-import { KakaoAuthGuard } from '../infrastructure/guard/kakao-auth.guard';
-@Controller('kakao')
-export class KakaoAuthController {
+import { NaverAuthGuard } from '../infrastructure/guard/naver-auth.guard';
+@Controller('naver')
+export class NaverAuthController {
   constructor(private readonly authService: AuthenticationService) {}
   @Get()
-  @UseGuards(KakaoAuthGuard)
+  @UseGuards(NaverAuthGuard)
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  async kakaoAuth(@Req() req: any) {}
+  async naverAuth(@Req() req: any) {}
 
   @Get('redirect')
-  @UseGuards(KakaoAuthGuard)
+  @UseGuards(NaverAuthGuard)
   @Redirect('http://localhost:8080/login/redirect')
-  async kakaoAuthRedirect(@Req() req: any, @Res({ passthrough: true }) response: Response) {
+  async naverAuthRedirect(@Req() req: any, @Res({ passthrough: true }) response: Response) {
     if (!req.user) {
       throw new HttpException('not user', HttpStatus.UNAUTHORIZED);
     }
