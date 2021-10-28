@@ -12,6 +12,8 @@ import { jwtConstants } from './infrastructure/types/constatnts';
 import { JwtStrategy } from './infrastructure/startegy/jwt.strategy';
 import { GoogleStrategy } from './infrastructure/startegy/google.strategy';
 import { GoogleAuthController } from './application/google-auth.controller';
+import { NaverAuthController } from './application/naver-auth.controller';
+import { NaverStrategy } from './infrastructure/startegy/naver.strategy';
 
 @Module({
   imports: [
@@ -22,8 +24,8 @@ import { GoogleAuthController } from './application/google-auth.controller';
       signOptions: { expiresIn: '1y' },
     }),
   ],
-  providers: [AuthenticationService, LocalStrategy, JwtStrategy, GoogleStrategy, ConfigService, KakaoStrategy],
+  providers: [AuthenticationService, LocalStrategy, JwtStrategy, GoogleStrategy, ConfigService, KakaoStrategy, NaverStrategy],
   exports: [AuthenticationService],
-  controllers: [AuthenticationController, GoogleAuthController, KakaoAuthController],
+  controllers: [AuthenticationController, GoogleAuthController, KakaoAuthController, NaverAuthController],
 })
 export class AuthenticationModule {}
