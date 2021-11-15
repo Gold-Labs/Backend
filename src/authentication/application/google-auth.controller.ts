@@ -1,8 +1,11 @@
 import { GoogleAuthGuard } from './../infrastructure/guard/google-auth.guard';
-import { Controller, Get, Req, UseGuards, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Req, UseGuards, HttpException, HttpStatus, Res, Redirect } from '@nestjs/common';
+import { AuthenticationService } from '../domain/service/authentication.service';
+import { Response } from 'express';
 
 @Controller('google')
 export class GoogleAuthController {
+  constructor(private readonly authService: AuthenticationService) {}
   @Get()
   @UseGuards(GoogleAuthGuard)
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -10,10 +13,12 @@ export class GoogleAuthController {
 
   @Get('redirect')
   @UseGuards(GoogleAuthGuard)
-  async googleAuthRedirect(@Req() req: any) {
+  @Redirect('http://localhost:8000/login/redirect')
+  async googleAuthRedirect(@Req() req: any, @Res({ passthrough: true }) response: Response) {
     if (!req.user) {
       throw new HttpException('not user', HttpStatus.UNAUTHORIZED);
     }
-    return req.user;
+    const accessToken = await this.authService.login(req.user);
+    response.cookie('key', accessToken.access_token);
   }
 }

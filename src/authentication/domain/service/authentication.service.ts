@@ -17,6 +17,7 @@ export class AuthenticationService {
     if (user) {
       throw new HttpException('user is already Exist', HttpStatus.BAD_REQUEST);
     }
+    console.log(createUserDto)
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
     const newUser = await this.userService.create({
       ...createUserDto,
@@ -64,11 +65,17 @@ export class AuthenticationService {
     return false;
   }
 
-  public async login(user: User) {
+  public  login(user: User) {
     const payload = { email: user.email, sub: user.id };
     return {
       access_token: this.jwtService.sign(payload),
     };
+  }
+
+  public async duplicateCheck(email:string){
+    console.log(email)
+    const user = await this.userService.getOneByEmail(email);
+    return user? false : true 
   }
 
   private async verfiedPassWord(hashedPassword: string, password: string) {
@@ -77,4 +84,5 @@ export class AuthenticationService {
       throw new HttpException('Wrong credentials provided', HttpStatus.BAD_REQUEST);
     }
   }
+
 }

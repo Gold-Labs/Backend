@@ -11,11 +11,13 @@ import { AuthenticationService } from '../../domain/service/authentication.servi
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private authService: AuthenticationService) {
-    super({ usernameField: 'email' });
+    super(
+      { usernameField: 'email'}
+    );
   }
   // request.user의 값을 넣어준다.
-  async validate(email: string, password: string) {
+  async validate(email: string, password: string,done: (error: any, user?: any, info?: any) => void) {
     const user = await this.authService.getAuthenticatedUser(email, password);
-    return user;
+    return user
   }
 }
